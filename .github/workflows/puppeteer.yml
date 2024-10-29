@@ -2,25 +2,21 @@ name: Puppeteer and Lighthouse
 on:
   workflow_run:
     workflows: ["Deploy Next.js site to Pages"]
-  types:
-  - completed
+    types:
+      - completed
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
+  run-script:
+    runs-on: ubuntu-22.04
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Install Dependencies
-        run: npm install
-
-      - name: Run main.mjs Script
-        run: node scripts/main.mjs
-
-      - name: Archive Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: archived-artifacts
-          path: auto_*
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - name: Install npm dependencies
+      run: npm install
+    - name: Run the script
+      run: node scripts/main.mjs
+    - name: Archive artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: script-artifacts
+        path: auto_*
